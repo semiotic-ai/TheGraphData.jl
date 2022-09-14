@@ -11,6 +11,7 @@ TensorCast = "02d47bb6-7ce6-556a-be16-bb1710789e2b"
 TypedTables = "9d95f2ec-7b3d-5a63-8d20-e2491e220bb9"
 
 [compat]
+TensorCast = "0.4"
 julia = "1.8"
 
 [extras]
