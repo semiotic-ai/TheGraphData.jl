@@ -3,6 +3,13 @@ uuid = "871720c8-5dfb-4fa2-998e-3fe6ebd08819"
 authors = ["Semiotic Labs", "Inc."]
 version = "0.1.0"
 
+[deps]
+GraphQLClient = "09d831e3-9c21-47a9-bfd8-076871817219"
+Mocking = "78c3b35d-d492-501b-9361-3d52fe80e533"
+TOML = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
+TensorCast = "02d47bb6-7ce6-556a-be16-bb1710789e2b"
+TypedTables = "9d95f2ec-7b3d-5a63-8d20-e2491e220bb9"
+
 [compat]
 julia = "1.8"
 
