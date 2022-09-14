@@ -1,6 +1,6 @@
 name = "TheGraphData"
 uuid = "871720c8-5dfb-4fa2-998e-3fe6ebd08819"
-authors = ["Semiotic Labs", "Inc."]
+authors = ["Semiotic Labs Inc."]
 version = "0.1.0"
 
 [deps]
