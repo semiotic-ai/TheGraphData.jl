@@ -1,0 +1,3 @@
+[deps]
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+TheGraphData = "871720c8-5dfb-4fa2-998e-3fe6ebd08819"
