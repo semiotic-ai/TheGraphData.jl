@@ -3,7 +3,9 @@
         data
     end
 
-    query_success_patch = @patch function GQLC.query(c, v; query_args, output_fields)
+    query_success_patch = @patch function GQLC.query(
+        c::GQLC.Client, v; query_args, output_fields
+    )
         if v == "subgraphDeployments"
             println("query stub ==> simulating subgraphs")
             return Data(
