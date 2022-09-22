@@ -14,7 +14,7 @@ makedocs(;
         edit_link="main",
         assets=String[],
     ),
-    pages=["Home" => "index.md", "Client" => "client.md"],
+    pages=["Home" => "index.md", "Querying Clients" => "querying.md"],
 )
 
 deploydocs(; repo="github.com/semiotic-ai/TheGraphData.jl", devbranch="main")
