@@ -59,20 +59,41 @@
 
     @testset "query" begin
         apply(query_success_patch) do
-            t = TheGraphData.query("subgraphDeployments", Dict("foo" => 1), ["foo"])
-            @test t.ipfsHash == ["Qma", "Qmb"]
-            @test t.signalledTokens == ["1", "2"]
+            v = TheGraphData.query("subgraphDeployments", Dict("foo" => 1), ["foo"])
+            @test v == [
+                Dict("ipfsHash" => "Qma", "signalledTokens" => "1"),
+                Dict("ipfsHash" => "Qmb", "signalledTokens" => "2"),
+            ]
 
-            t = TheGraphData.query("indexers", Dict("foo" => 1), ["foo"])
-            @test t.id == ["0xa", "0xb"]
-            @test t.delegatedTokens == ["1", "2"]
-            @test t.stakedTokens == ["10", "20"]
-            @test t.lockedTokens == ["100", "200"]
+            v = TheGraphData.query("indexers", Dict("foo" => 1), ["foo"])
+            @test v == [
+                Dict(
+                    "id" => "0xa",
+                    "delegatedTokens" => "1",
+                    "stakedTokens" => "10",
+                    "lockedTokens" => "100",
+                ),
+                Dict(
+                    "id" => "0xb",
+                    "delegatedTokens" => "2",
+                    "stakedTokens" => "20",
+                    "lockedTokens" => "200",
+                ),
+            ]
 
-            t = TheGraphData.query("allocations", Dict("foo" => 1), ["foo"])
-            @test t.allocatedTokens == ["1", "2"]
-            @test t.indexer == [Dict("id" => "0xa"), Dict("id" => "0xb")]
-            @test t.subgraphDeployment == [Dict("ipfsHash" => "Qma"), Dict("ipfsHash" => "Qmb")]
+            v = TheGraphData.query("allocations", Dict("foo" => 1), ["foo"])
+            @test v == [
+                Dict(
+                    "indexer" => Dict("id" => "0xa"),
+                    "subgraphDeployment" => Dict("ipfsHash" => "Qma"),
+                    "allocatedTokens" => "1",
+                ),
+                Dict(
+                    "indexer" => Dict("id" => "0xb"),
+                    "subgraphDeployment" => Dict("ipfsHash" => "Qmb"),
+                    "allocatedTokens" => "2",
+                ),
+            ]
         end
     end
 end
