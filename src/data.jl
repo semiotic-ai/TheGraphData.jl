@@ -22,13 +22,6 @@ Unnest a dictionary `d`. The innermost key is preserved.
 
 Note that this function assumes no duplicate keys.
 Else, the function may behave in unexpected ways.
-
-# Example
-```julia
-julia> d = Dict("a" => 1, "b" => Dict("c" => Dict("d" => 4)))
-julia> unnestdict(d)
-Dict("a" => 1, "d" => 4)
-```
 """
 function unnestdict(d::Dict)
     isempty(d) && return d

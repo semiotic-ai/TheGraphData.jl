@@ -1,5 +1,7 @@
 # Querying Clients
 
+This section will take you through setting a client and querying it.
+
 In order to query data, this package must have access to a valid GraphQL client.
 By default, this client is the gateway (https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-mainnet).
 However, you can change the client to another.
