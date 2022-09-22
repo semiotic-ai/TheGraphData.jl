@@ -10,7 +10,7 @@ const client = Ref(
     client!(u::AbstractString)
     client!(c::GraphQLClient.Client)
 
-Set the provided url (`u`) or client (`c`) as the new client.
+Set the provided url (`u`) or client (`c`) as the new global client.
 """
 client!(u::AbstractString) = client[] = GQLC.Client(u)
 client!(c::GQLC.Client) = client[] = c
