@@ -9,5 +9,13 @@ You'll get best use out of this package by composing its functions.
 
 ## Installation
 
-Download [Julia 1.8 or greater](https://julialang.org/).
-Install this package by running `] add TheGraphData` from the julia REPL.
+Make sure you've installed [Julia 1.8 or greater](https://julialang.org/).
+
+This package is hosted on [SemioticJLRegistry](https://github.com/semiotic-ai/SemioticJLRegistry).
+To add this package, first add the registry to your Julia installation.
+Then, install this package by running `] add TheGraphData` from the Julia REPL.
+
+``` julia
+julia> ] registry add https://github.com/semiotic-ai/SemioticJLRegistry
+julia> ] add TheGraphData
+```
