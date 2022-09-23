@@ -16,7 +16,7 @@ TheGraphData.client!
 
 This sets the global client, so all subsequent calls to querying function do not need you to track and pass the client around.
 
-After ensuring that you've correctly set the client [Client](@ref), you can now query the client for data.
+After ensuring that you've correctly set the client, you can now query the client for data.
 ```julia
 julia> qvalue = "subgraphDeployments"
 julia> qargs = Dict("first" => 1000, "orderBy" => "signalledTokens")
