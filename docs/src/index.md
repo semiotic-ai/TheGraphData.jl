@@ -6,6 +6,7 @@ CurrentModule = TheGraphData
 
 This package aims to simplify querying and transforming data read from The Graph Protocol.
 You'll get best use out of this package by composing its functions.
+If you find you can often use the pipe operator `|>`, you're probably on the right track.
 
 ## Installation
 
