@@ -1,7 +1,7 @@
 name = "TheGraphData"
 uuid = "871720c8-5dfb-4fa2-998e-3fe6ebd08819"
 authors = ["Semiotic Labs Inc."]
-version = "0.1.5"
+version = "0.1.6"
 
 [deps]
 GraphQLClient = "09d831e3-9c21-47a9-bfd8-076871817219"
