@@ -10,6 +10,7 @@ This function returns a vector of dictionaries.
 """
 function query(v::AbstractString, a::Dict, f::AbstractVector{S}) where {S<:AbstractString}
     # TODO: Better way to convert the type?
+    # TODO: Catch MethodError: no method matching getindex(::Nothing, String)
     data::Vector{<:Dict} = map(  # Convert Vector{Dict{Any, Any}} to proper types
         x -> x,
         @mock(GQLC.query(client[], v; query_args=a, output_fields=f)).data[v],

@@ -1,6 +1,10 @@
 using TheGraphData
-using Test
+
+using CSV
 using Mocking
+using Test
+using TypedTables
+
 import GraphQLClient as GQLC
 
 Mocking.activate()
