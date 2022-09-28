@@ -1,18 +1,22 @@
 export table, unnestdict
 
 """
-    table(data::AbstractVector{D}) where {D<:Dict}
+    table(d::AbstractVector{D}) where {D<:Dict}
+    table(d::CSV.File)
 
-Convert the queried `data` to a TypedTable.
+Convert the queried data `d` to a TypedTable.
 """
-function table(data::AbstractVector{D}) where {D<:Dict}
-    # Benchmarking shows that using dataframe with t = reduce(vcat, DataFrame.(data))
+function table(d::AbstractVector{D}) where {D<:Dict}
+    # Benchmarking shows that using dataframe with t = reduce(vcat, DataFrame.(d))
     # is about twice as slow
-    ks = keys(data[1])
-    vs = collect.(values.(data))
+    ks = keys(d[1])
+    vs = collect.(values.(d))
     @cast ws[i][j] := vs[j][i]
     t = Table(; (Symbol.(ks) .=> ws)...)
     return t
+end
+function table(d::CSV.File)
+    return Table(d)
 end
 
 """

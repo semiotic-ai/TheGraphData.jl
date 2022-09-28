@@ -41,6 +41,9 @@
         @test t.allocatedTokens == ["1", "2"]
         @test t.indexer == [Dict("id" => "0xa"), Dict("id" => "0xb")]
         @test t.subgraphDeployment == [Dict("ipfsHash" => "Qma"), Dict("ipfsHash" => "Qmb")]
+
+        t = table(CSV.File(IOBuffer("X\nb\nc\na\nc")))
+        @test t.X == ["b", "c", "a", "c"]
     end
 
     @testset "unnestdict" begin
