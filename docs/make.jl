@@ -17,6 +17,7 @@ makedocs(;
     pages=[
         "Home" => "index.md",
         "Querying Clients" => "querying.md",
+        "IO" => "io.md",
         "Handling Data" => "data.md",
     ],
 )
