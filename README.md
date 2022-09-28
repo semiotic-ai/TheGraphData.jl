@@ -13,6 +13,6 @@ To add this package, first add the registry to your Julia installation.
 Then, install this package by running `] add TheGraphData` from the Julia REPL.
 
 ``` julia
-julia> ] registry add https://github.com/semiotic-ai/SemioticJLRegistry
-julia> ] add TheGraphData
+julia> ]registry add https://github.com/semiotic-ai/SemioticJLRegistry
+julia> ]add TheGraphData
 ```
