@@ -1,3 +1,6 @@
+# Copyright 2022-, Semiotic AI, Inc.
+# SPDX-License-Identifier: Apache-2.0
+
 @testset "io" begin
     @testset "extsym" begin
         @test TheGraphData.splitextsym("this/is/a/file.txt") == :txt
