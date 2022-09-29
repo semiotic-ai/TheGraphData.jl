@@ -1,6 +1,12 @@
 # Copyright 2022-, Semiotic AI, Inc.
 # SPDX-License-Identifier: Apache-2.0
 
+abstract type FiletypeTrait end
+struct IsCSV <: FiletypeTrait end
+
+FiletypeTrait(::Val{:csv}) = IsCSV()
+FiletypeTrait(::Val{:txt}) = IsCSV()
+
 """
     splitextsym(f::AbstractString)
 
@@ -18,7 +24,8 @@ end
 
 """
     write(f::AbstractString, d; kwargs...)
-    write(::Union{Val{:csv},Val{:txt}}, f::AbstractString, d::Union{T,D}; kwargs...) where {T<:Table,D<:Dict}
+    write(v::Val, f::AbstractString, d; kwargs...)
+    write(::IsCSV, f::AbstractString, d::Union{T,D}; kwargs...) where {T<:Table,D<:Dict}
 
 Write the data `d` to the filepath `f` with kwargs.
 
@@ -31,8 +38,9 @@ function write(f::AbstractString, d; kwargs...)
     fout = write(Val(ext), f, d; kwargs...)
     return fout
 end
+write(v::Val, f::AbstractString, d; kwargs...) = write(FiletypeTrait(v), f, d; kwargs...)
 function write(
-    ::Union{Val{:csv},Val{:txt}}, f::AbstractString, d::Union{T,D}; kwargs...
+    ::IsCSV, f::AbstractString, d::Union{T,D}; kwargs...
 ) where {T<:Table,D<:Dict}
     @mock(CSV.write(f, d; kwargs...))
 end
@@ -54,6 +62,7 @@ function read(f::AbstractString; kwargs...)
     d = read(Val(ext), f; kwargs...)
     return d
 end
-function read(::Union{Val{:csv},Val{:txt}}, f::AbstractString; kwargs...)
+read(v::Val, f::AbstractString; kwargs...) = read(FiletypeTrait(v), f; kwargs...)
+function read(::IsCSV, f::AbstractString; kwargs...)
     @mock(CSV.File(f; kwargs...))
 end
