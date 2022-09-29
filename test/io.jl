@@ -12,7 +12,7 @@
     end
     @testset "TheGraphData.write" begin
         @testset "failure" begin
-            @test_throws ErrorException TheGraphData.write("foo.bar", Dict("a" => 1))
+            @test_throws MethodError TheGraphData.write("foo.bar", Dict("a" => 1))
         end
         @testset "table" begin
             d = Table(; a=[1, 2, 3], b=[3, 2, 1])
@@ -36,7 +36,7 @@
     @testset "TheGraphData.read" begin
         apply(read_csv_success_patch) do
             @test TheGraphData.read("fpath.csv")[1][:X] == "b"
-            @test_throws ErrorException TheGraphData.read("fpath.foo")
+            @test_throws MethodError TheGraphData.read("fpath.foo")
         end
     end
 end
