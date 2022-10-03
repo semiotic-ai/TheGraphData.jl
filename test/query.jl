@@ -61,7 +61,6 @@
             )
         end
     end
-
     @testset "query" begin
         apply(query_success_patch) do
             v = TheGraphData.query("subgraphDeployments", Dict("foo" => 1), ["foo"])

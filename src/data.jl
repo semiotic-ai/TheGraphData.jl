@@ -1,7 +1,7 @@
 # Copyright 2022-, Semiotic AI, Inc.
 # SPDX-License-Identifier: Apache-2.0
 
-export table, unnestdict
+export table, unnestdict, setdefault!
 
 """
     table(d::AbstractVector{D}) where {D<:Dict}
@@ -41,3 +41,15 @@ function unnestdict(_, d::Dict)  # helper
     end...)
 end
 unnestdict(k, v) = Dict(k => v)  # helper
+
+"""
+    setdefault!(d::Dict, k, v)
+
+Set the value in the collection if it doesn't exist.
+
+Similar to Python's `setdefault` when used on dictionaries.
+On vectors, this checks if the value is in the vector, and adds it if it isn't.
+This does not work on nested vectors.
+"""
+setdefault!(d::Dict, k, v) = haskey(d, k) ? d[k] : d[k] = v
+setdefault!(d::Vector, v) = v in d ? d : push!(d, v)

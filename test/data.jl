@@ -48,7 +48,6 @@
         t = table(CSV.File(IOBuffer("X\nb\nc\na\nc")))
         @test t.X == ["b", "c", "a", "c"]
     end
-
     @testset "unnestdict" begin
         d = Dict("a" => 1, "b" => 2, "c" => 3)
         v = unnestdict(d)
@@ -65,5 +64,21 @@
         d = Dict("a" => 1, "b" => Dict("c" => Dict("d" => 4)))
         v = unnestdict(d)
         @test v == Dict("a" => 1, "d" => 4)
+    end
+    @testset "setdefault!" begin
+        @testset "dict" begin
+            d = Dict("a" => 1, "b" => 2)
+            _ = setdefault!(d, "c", 3)
+            @test d["c"] == 3
+            _ = setdefault!(d, "c", 4)
+            @test d["c"] == 3
+        end
+        @testset "vector" begin
+            d = ["a", "b"]
+            _ = setdefault!(d, "c")
+            @test d == ["a", "b", "c"]
+            _ = setdefault!(d, "c")
+            @test d == ["a", "b", "c"]
+        end
     end
 end
