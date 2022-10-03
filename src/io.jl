@@ -35,6 +35,7 @@ Please submit a PR or feature request if you want this particular combo to be su
 """
 function write(f::AbstractString, d; kwargs...)
     ext = splitextsym(f)
+    _ = mkpath(dirname(f))
     fout = write(Val(ext), f, d; kwargs...)
     return fout
 end
