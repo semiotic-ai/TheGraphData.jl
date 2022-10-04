@@ -54,3 +54,9 @@ julia> TheGraphData.write("myfile.csv", t)
 ```@docs
 TheGraphData.write
 ```
+
+## Helper Functions
+
+```@docs
+TheGraphData.splitextsym
+```
