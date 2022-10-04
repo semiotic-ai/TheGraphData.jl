@@ -1,21 +1,55 @@
 # Copyright 2022-, Semiotic AI, Inc.
 # SPDX-License-Identifier: Apache-2.0
 
-export query
+export query, paginated_query
 
 """
-    query(v::AbstractString, a::Dict, f::AbstractVector{S}) where {S<:AbstractString}
+    query(
+        v::AbstractString, a::Dict{S,Union{I,S,Dict}}, f::AbstractVector{S}
+    ) where {S<:AbstractString,I<:Integer}
 
 Query the client for value `v` with arguments `a` and fields `f`.
 
 By default, the client is the gateway.
 This function returns a vector of dictionaries.
+Unless you know what you're doing, you should probably prefer [`paginated_query`](@ref) to
+this function.
 """
-function query(v::AbstractString, a::Dict, f::AbstractVector{S}) where {S<:AbstractString}
-    # TODO: Better way to convert the type?
-    # TODO: Catch MethodError: no method matching getindex(::Nothing, String)
-    data::Vector{<:Dict} = Dict[
+function query(
+    v::AbstractString, a::Dict{S,Union{I,S,Dict}}, f::AbstractVector{S}
+) where {S<:AbstractString,I<:Integer}
+    data = Dict[
         x for x in @mock(GQLC.query(client[], v; query_args=a, output_fields=f)).data[v]
     ]
     return data
+end
+
+"""
+    paginated_query(
+        v::AbstractString, a::Dict{S,Union{I,S,Dict}}, f::AbstractVector{S}
+    ) where {S<:AbstractString,I<:Integer}
+
+Query the client using comparator-based pagination.
+
+By default, the client is the gateway.
+This function returns a vector of dictionaries.
+Unless you know what you're doing, you should probably prefer this function to [`query`](@ref).
+"""
+function paginated_query(
+    v::AbstractString, a::Dict{S,Union{I,S,Dict}}, f::AbstractVector{S}
+) where {S<:AbstractString,I<:Integer}
+    haskey(a, "orderBy") && @info "Note that paginated_query must be ordered by id."
+    fo = "id"
+    a["orderBy"] = fo
+    f = setdefault!(f, fo)
+    q = (a, f) -> query(v, a, f)
+    d = q(a, f)
+    ds = typeof(d)[]
+    a = setdefault!(a, "where", Dict())
+    while !isempty(d)
+        ds = vcat(ds, d)
+        a["where"]["$(fo)_gt"] = ds[end][fo]
+        d = q(a, f)
+    end
+    return ds
 end

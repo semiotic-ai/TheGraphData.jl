@@ -15,7 +15,7 @@ Get the extension of the filepath `f` as a symbol.
 This function is unexported.
 """
 function splitextsym(f::AbstractString)
-    x = Symbol(splitext(f)[end][2:end])  # TODO: Better way?
+    x = Symbol(splitext(f)[end][2:end])
     if x == Symbol("")
         throw(ArgumentError("$f has no extension."))
     end

@@ -11,37 +11,22 @@
         @test t.signalledTokens == ["1", "2"]
 
         t = table([
-            Dict(
-                "id" => "0xa",
-                "delegatedTokens" => "1",
-                "stakedTokens" => "10",
-                "lockedTokens" => "100",
-            ),
-            Dict(
-                "id" => "0xb",
-                "delegatedTokens" => "2",
-                "stakedTokens" => "20",
-                "lockedTokens" => "200",
-            ),
+            Dict("id" => "0xa", "delegatedTokens" => "1"),
+            Dict("id" => "0xb", "delegatedTokens" => "2"),
         ])
         @test t.id == ["0xa", "0xb"]
         @test t.delegatedTokens == ["1", "2"]
-        @test t.stakedTokens == ["10", "20"]
-        @test t.lockedTokens == ["100", "200"]
 
         t = table([
             Dict(
                 "indexer" => Dict("id" => "0xa"),
                 "subgraphDeployment" => Dict("ipfsHash" => "Qma"),
-                "allocatedTokens" => "1",
             ),
             Dict(
                 "indexer" => Dict("id" => "0xb"),
                 "subgraphDeployment" => Dict("ipfsHash" => "Qmb"),
-                "allocatedTokens" => "2",
             ),
         ])
-        @test t.allocatedTokens == ["1", "2"]
         @test t.indexer == [Dict("id" => "0xa"), Dict("id" => "0xb")]
         @test t.subgraphDeployment == [Dict("ipfsHash" => "Qma"), Dict("ipfsHash" => "Qmb")]
 
@@ -68,16 +53,16 @@
     @testset "setdefault!" begin
         @testset "dict" begin
             d = Dict("a" => 1, "b" => 2)
-            _ = setdefault!(d, "c", 3)
+            d = setdefault!(d, "c", 3)
             @test d["c"] == 3
-            _ = setdefault!(d, "c", 4)
+            d = setdefault!(d, "c", 4)
             @test d["c"] == 3
         end
         @testset "vector" begin
             d = ["a", "b"]
-            _ = setdefault!(d, "c")
+            d = setdefault!(d, "c")
             @test d == ["a", "b", "c"]
-            _ = setdefault!(d, "c")
+            d = setdefault!(d, "c")
             @test d == ["a", "b", "c"]
         end
     end

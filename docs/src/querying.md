@@ -19,11 +19,12 @@ This sets the global client, so all subsequent calls to querying function do not
 After ensuring that you've correctly set the client, you can now query the client for data.
 ```julia
 julia> qvalue = "subgraphDeployments"
-julia> qargs = Dict("first" => 1000, "orderBy" => "signalledTokens")
+julia> qargs = Dict{String,Union{Int64,String,Dict}}("first" => 1000, "orderBy" => "signalledTokens")
 julia> qfields = ["ipfsHash"]
-julia> query(qvalue, qargs, qfields)
+julia> paginated_query(qvalue, qargs, qfields)
 ```
 
 ```@docs
+TheGraphData.paginated_query
 TheGraphData.query
 ```

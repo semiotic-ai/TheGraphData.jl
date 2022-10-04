@@ -1,7 +1,7 @@
 name = "TheGraphData"
 uuid = "871720c8-5dfb-4fa2-998e-3fe6ebd08819"
 authors = ["Semiotic Labs Inc."]
-version = "0.1.8"
+version = "0.1.9"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"

@@ -20,6 +20,29 @@ Dict("a" => 1, "d" => 4)
 TheGraphData.unnestdict
 ```
 
+Given a dictionary or vector, you may also want to insert a key-value pair or element respectively if
+it isn't already set.
+
+```julia
+julia> d = Dict("a" => 1, "b" => 2)
+julia> d = setdefault!(d, "c", 3)
+Dict("a" => 1, "b" => 2, "c" => 3)
+julia> d = setdefault!(d, "c", 4)
+Dict("a" => 1, "b" => 2, "c" => 3)
+```
+
+```julia
+julia> d = ["a", "b"]
+julia> d = setdefault!(d, "c")
+["a", "b", "c"]
+julia> d = setdefault!(d, "c")
+["a", "b", "c"]
+```
+
+```@docs
+TheGraphData.setdefault!
+```
+
 ## Reformatting Queried Data
 
 A vector of dictionaries is not the nicest data format to work with.

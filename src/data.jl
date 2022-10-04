@@ -12,6 +12,7 @@ Convert the queried data `d` to a TypedTable.
 function table(d::AbstractVector{D}) where {D<:Dict}
     # Benchmarking shows that using dataframe with t = reduce(vcat, DataFrame.(d))
     # is about twice as slow
+    # TODO: still slow
     ks = keys(d[1])
     vs = collect.(values.(d))
     @cast ws[i][j] := vs[j][i]
@@ -51,5 +52,10 @@ Similar to Python's `setdefault` when used on dictionaries.
 On vectors, this checks if the value is in the vector, and adds it if it isn't.
 This does not work on nested vectors.
 """
-setdefault!(d::Dict, k, v) = haskey(d, k) ? d[k] : d[k] = v
+function setdefault!(d::Dict, k, v)
+    if !haskey(d, k)
+        d[k] = v
+    end
+    return d
+end
 setdefault!(d::Vector, v) = v in d ? d : push!(d, v)

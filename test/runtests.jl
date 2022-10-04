@@ -12,6 +12,7 @@ import GraphQLClient as GQLC
 
 Mocking.activate()
 
+include("patch.jl")
 for f in readlines(joinpath(@__DIR__, "testgroups"))
     include(f * ".jl")
 end
