@@ -33,21 +33,21 @@
         t = table(CSV.File(IOBuffer("X\nb\nc\na\nc")))
         @test t.X == ["b", "c", "a", "c"]
     end
-    @testset "unnestdict" begin
+    @testset "flatten" begin
         d = Dict("a" => 1, "b" => 2, "c" => 3)
-        v = unnestdict(d)
+        v = flatten(d)
         @test v == d
 
         d = Dict()
-        v = unnestdict(d)
+        v = flatten(d)
         @test v == d
 
         d = Dict("a" => 1, "b" => Dict("c" => 3))
-        v = unnestdict(d)
+        v = flatten(d)
         @test v == Dict("a" => 1, "b.c" => 3)
 
         d = Dict("a" => 1, "b" => Dict("c" => Dict("d" => 4)))
-        v = unnestdict(d)
+        v = flatten(d)
         @test v == Dict("a" => 1, "b.c.d" => 4)
     end
     @testset "setdefault!" begin
@@ -65,5 +65,20 @@
             d = setdefault!(d, "c")
             @test d == ["a", "b", "c"]
         end
+    end
+    @testset "symbolkeys" begin
+        d = Dict("a" => 1, "b" => 2)
+        @test symbolkeys(d) == Dict(:a => 1, :b => 2)
+        d = Dict()
+        @test symbolkeys(d) == Dict()
+    end
+
+    @testset "dicttont" begin
+        d = Dict(:a => 1, :b => 2)
+        @test dicttont(d) == (a=1, b=2)
+        d = Dict("a" => 1, "b" => 2)
+        @test dicttont(d) == (a=1, b=2)
+        d = Dict()
+        @test dicttont(d) == NamedTuple()
     end
 end

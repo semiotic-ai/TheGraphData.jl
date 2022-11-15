@@ -12,12 +12,12 @@ Remember, you can apply this function to a vector of dictionaries by using the b
 
 ```julia
 julia> d = Dict("a" => 1, "b" => Dict("c" => Dict("d" => 4)))
-julia> unnestdict(d)
-Dict("a" => 1, "d" => 4)
+julia> flatten(d)
+Dict("a" => 1, "b.c.d" => 4)
 ```
 
 ```@docs
-TheGraphData.unnestdict
+TheGraphData.flatten
 ```
 
 Given a dictionary or vector, you may also want to insert a key-value pair or element respectively if
@@ -52,14 +52,14 @@ To this end, we provide helper functions to put the data into nicer formats.
 
 In Julia, the [Tables.jl](https://github.com/JuliaData/Tables.jl) interface is quite powerful.
 Hence, you may find it useful to format your data as a [TypedTable](https://typedtables.juliadata.org/stable/).
-Once your data is a TypedTable, you can use powerful packages like [SplitApplyCombine.jl](https://github.com/JuliaData/SplitApplyCombine.jl) to manipulate your data.
+Once your data is a TypedTable, you can use packages like [SplitApplyCombine.jl](https://github.com/JuliaData/SplitApplyCombine.jl) to manipulate your data.
 A typical workflow using the default client from beginning to TypedTable might look like
 
 ```julia
 julia> qvalue = "indexers"
 julia> qargs = Dict("first" => 1)
 julia> qfields = ["id"]
-julia> query(qvalue, qargs, qfields) .|> unnestdict |> table
+julia> query(qvalue, qargs, qfields) .|> flatten |> table
 Table with 1 column and 1 row:
      id
    ┌───────────────────────────────────────────

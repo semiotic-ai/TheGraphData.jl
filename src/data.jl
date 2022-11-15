@@ -1,7 +1,7 @@
 # Copyright 2022-, Semiotic AI, Inc.
 # SPDX-License-Identifier: Apache-2.0
 
-export table, unnestdict, setdefault!
+export table, flatten, setdefault!, symbolkeys, dicttont
 
 """
     table(d::AbstractVector{D}) where {D<:Dict}
@@ -24,24 +24,27 @@ function table(d::CSV.File)
 end
 
 """
-    unnestdict(d::Dict)
+    flatten(d::Dict)
 
-Unnest a dictionary `d`. The innermost key is preserved.
+Flatten a dictionary `d`.
+
+For example, for `Dict(:a => Dict(:b => 2))`, the resulting dictionary would be
+`Dict(:(a.b) => 2)`.
 """
-function unnestdict(d::Dict)
+function flatten(d::Dict)
     isempty(d) && return d
-    return unnestdict("", d)
+    return flatten("", d)
 end
-function unnestdict(kp, d::Dict)  # helper
+function flatten(kp, d::Dict)  # helper
     return merge(map(collect(d)) do p
         k, v = p
         if !isempty(kp)  # NOTE: Potential refactor, remove if
             kp = join((kp, "."))
         end
-        return unnestdict(join((kp, k)), v)
+        return flatten(join((kp, k)), v)
     end...)
 end
-unnestdict(k, v) = Dict(k => v)  # helper
+flatten(k, v) = Dict(k => v)  # helper
 
 """
     setdefault!(d::Dict, k, v)
@@ -59,3 +62,18 @@ function setdefault!(d::Dict, k, v)
     return d
 end
 setdefault!(d::Vector, v) = v in d ? d : push!(d, v)
+
+"""
+    symbolkeys(d::Dict)
+
+Convert a dictionary's string keys to symbols
+"""
+symbolkeys(d::Dict) = Dict(Symbol.(keys(d)) .=> values(d))
+
+"""
+    dicttont(d::Dict)
+
+Convert a dictionary to a namedtuple. The keys of the dictionary must be symbols.
+"""
+dicttont(d::Dict{Symbol}) = (; d...)
+dicttont(d::Dict) = (; symbolkeys(d)...)
