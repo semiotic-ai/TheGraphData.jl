@@ -27,18 +27,18 @@ end
     unnestdict(d::Dict)
 
 Unnest a dictionary `d`. The innermost key is preserved.
-
-Note that this function assumes no duplicate keys.
-Else, the function may behave in unexpected ways.
 """
 function unnestdict(d::Dict)
     isempty(d) && return d
     return unnestdict("", d)
 end
-function unnestdict(_, d::Dict)  # helper
+function unnestdict(kp, d::Dict)  # helper
     return merge(map(collect(d)) do p
         k, v = p
-        return unnestdict(k, v)
+        if !isempty(kp)  # NOTE: Potential refactor, remove if
+            kp = join((kp, "."))
+        end
+        return unnestdict(join((kp, k)), v)
     end...)
 end
 unnestdict(k, v) = Dict(k => v)  # helper

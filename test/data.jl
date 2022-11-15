@@ -44,11 +44,11 @@
 
         d = Dict("a" => 1, "b" => Dict("c" => 3))
         v = unnestdict(d)
-        @test v == Dict("a" => 1, "c" => 3)
+        @test v == Dict("a" => 1, "b.c" => 3)
 
         d = Dict("a" => 1, "b" => Dict("c" => Dict("d" => 4)))
         v = unnestdict(d)
-        @test v == Dict("a" => 1, "d" => 4)
+        @test v == Dict("a" => 1, "b.c.d" => 4)
     end
     @testset "setdefault!" begin
         @testset "dict" begin
