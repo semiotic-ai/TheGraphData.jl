@@ -10,7 +10,8 @@
         @test TheGraphData.client[].endpoint == "https://countries.trevorblades.com"
         client!(
             GQLC.Client(
-                "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-mainnet",
+                "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-mainnet";
+                introspect=false,
             ),
         )
         @test TheGraphData.client[].endpoint ==
