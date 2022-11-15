@@ -5,8 +5,8 @@ export query, paginated_query
 
 """
     query(
-        v::AbstractString, a::Dict{S,Union{I,S,Dict}}, f::AbstractVector{S}
-    ) where {S<:AbstractString,I<:Integer}
+        v::AbstractString, a::Dict, f::AbstractVector{S}
+    ) where {S<:AbstractString}
 
 Query the client for value `v` with arguments `a` and fields `f`.
 
@@ -15,9 +15,7 @@ This function returns a vector of dictionaries.
 Unless you know what you're doing, you should probably prefer [`paginated_query`](@ref) to
 this function.
 """
-function query(
-    v::AbstractString, a::Dict{S,Union{I,S,Dict}}, f::AbstractVector{S}
-) where {S<:AbstractString,I<:Integer}
+function query(v::AbstractString, a::Dict, f::AbstractVector{S}) where {S<:AbstractString}
     data = Dict[
         x for x in @mock(GQLC.query(client[], v; query_args=a, output_fields=f)).data[v]
     ]
@@ -26,8 +24,8 @@ end
 
 """
     paginated_query(
-        v::AbstractString, a::Dict{S,Union{I,S,Dict}}, f::AbstractVector{S}
-    ) where {S<:AbstractString,I<:Integer}
+        v::AbstractString, a::Dict, f::AbstractVector{S}
+    ) where {S<:AbstractString}
 
 Query the client using comparator-based pagination.
 
@@ -36,18 +34,18 @@ This function returns a vector of dictionaries.
 Unless you know what you're doing, you should probably prefer this function to [`query`](@ref).
 """
 function paginated_query(
-    v::AbstractString, a::Dict{S,Union{I,S,Dict}}, f::AbstractVector{S}
-) where {S<:AbstractString,I<:Integer}
+    v::AbstractString, a::Dict, f::AbstractVector{S}
+) where {S<:AbstractString}
     haskey(a, "orderBy") && @info "Note that paginated_query must be ordered by id."
     fo = "id"
     a["orderBy"] = fo
     f = setdefault!(f, fo)
     q = (a, f) -> query(v, a, f)
     d = q(a, f)
-    ds = typeof(d)[]
+    ds = Vector{Dict}[]
     a = setdefault!(a, "where", Dict())
     while !isempty(d)
-        ds = vcat(ds, d)
+        ds::Vector{Dict} = vcat(ds, d)
         a["where"]["$(fo)_gt"] = ds[end][fo]
         d = q(a, f)
     end
