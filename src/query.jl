@@ -16,7 +16,7 @@ Unless you know what you're doing, you should probably prefer [`paginated_query`
 this function.
 """
 function query(v::AbstractString, a::Dict, f::AbstractVector{S}) where {S<:AbstractString}
-    data::Vector{Dict} = @mock(GQLC.query(client[], v; query_args=a, output_fields=f)).data[v]
+    data::Union{Vector{Dict},Dict} = @mock(GQLC.query(client[], v; query_args=a, output_fields=f)).data[v]
     return data
 end
 
