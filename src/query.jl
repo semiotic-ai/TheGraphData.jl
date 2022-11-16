@@ -16,7 +16,7 @@ Unless you know what you're doing, you should probably prefer [`paginated_query`
 this function.
 """
 function query(v::AbstractString, a::Dict, f::AbstractVector{S}) where {S<:AbstractString}
-    d::Union{Vector{Dict},Dict} = @mock(GQLC.query(client[], v; query_args=a, output_fields=f)).data[v]
+    d::Union{Vector,Dict} = @mock(GQLC.query(client[], v; query_args=a, output_fields=f)).data[v]
     return querytypehelper(d)
 end
 
@@ -26,8 +26,8 @@ end
 
 Ensure output of [`query`](@ref) is type-stable.
 """
-querytypehelper(v::Vector{Dict}) = v
-querytypehelper(v::Dict) = Dict[v,]
+querytypehelper(v::Vector)::Vector{Dict} = map(x -> x, v)
+querytypehelper(v::Dict)::Vector{Dict} = Dict[v,]
 
 """
     paginated_query(
