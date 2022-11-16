@@ -45,6 +45,7 @@ function paginated_query(
 ) where {S<:AbstractString}
     haskey(a, "orderBy") && @info "Note that paginated_query must be ordered by id."
     fo = "id"
+    @show typeof(a)
     a["orderBy"] = fo
     f = setdefault!(f, fo)
     q = (a, f) -> query(v, a, f)

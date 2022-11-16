@@ -10,25 +10,21 @@ query_success_patch = @patch function GQLC.query(
 
     isempty(a) && return Data(
         Dict(
-            "allocations" => [
-                Dict(
-                    "id" => "0xa",
-                    "subgraphDeployment" => Dict("ipfsHash" => "Qma"),
-                    "allocatedTokens" => "1",
-                ),
-            ],
+            "allocations" => Dict[Dict(
+                "id" => "0xa",
+                "subgraphDeployment" => Dict("ipfsHash" => "Qma"),
+                "allocatedTokens" => "1",
+            ),],
         ),
     )
 
     a["id_gt"] == "0xa" && return Data(
         Dict(
-            "allocations" => [
-                Dict(
-                    "id" => "0xb",
-                    "subgraphDeployment" => Dict("ipfsHash" => "Qmb"),
-                    "allocatedTokens" => "2",
-                ),
-            ],
+            "allocations" => Dict[Dict(
+                "id" => "0xb",
+                "subgraphDeployment" => Dict("ipfsHash" => "Qmb"),
+                "allocatedTokens" => "2",
+            ),],
         ),
     )
 

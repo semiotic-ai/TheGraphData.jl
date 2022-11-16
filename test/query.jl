@@ -3,7 +3,7 @@
 
 @testset "query" begin
     @testset "query" begin
-        a = Dict{String,Union{Int64,String,Dict}}("foo" => 1)
+        a = Dict("foo" => 1)
         f = ["foo"]
         apply(query_success_patch) do
             v = TheGraphData.query("allocations", a, f)
@@ -17,7 +17,7 @@
         end
     end
     @testset "paginated_query" begin
-        a = Dict{String,Union{Int64,String,Dict}}("foo" => 1)
+        a = Dict("foo" => 1, "bar" => "foobar")
         f = ["foo"]
         apply(query_success_patch) do
             v = TheGraphData.paginated_query("allocations", a, f)
