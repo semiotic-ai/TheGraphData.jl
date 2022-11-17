@@ -50,8 +50,8 @@ function paginated_query(
     q = (a, f) -> query(v, a, f)
     d = q(a, f)
     ds = Vector{Dict}[]
-    a = setdefault!(a, "where", Dict())
-    while !isempty(d)
+    a = setdefault!(a, "where", Dict{String,String}())
+    while !isempty(d)  # TODO: Stop on return different size
         ds::Vector{Dict} = vcat(ds, d)
         a["where"]["$(fo)_gt"] = ds[end][fo]
         d = q(a, f)
