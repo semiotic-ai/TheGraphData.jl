@@ -6,6 +6,7 @@ export table, flatten, setdefault!, symbolkeys, dicttont
 """
     table(d::AbstractVector{D}) where {D<:Dict}
     table(d::CSV.File)
+    table(d::NamedTuple)
 
 Convert the queried data `d` to a TypedTable.
 """
@@ -22,6 +23,7 @@ end
 function table(d::CSV.File)
     return Table(d)
 end
+table(d::NamedTuple) = Table(d)
 
 """
     flatten(d::Dict)
