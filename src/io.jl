@@ -25,7 +25,9 @@ end
 """
     write(f::AbstractString, d; kwargs...)
     write(v::Val, f::AbstractString, d; kwargs...)
-    write(::IsCSV, f::AbstractString, d::Union{T,D}; kwargs...) where {T<:Table,D<:Dict}
+    write(::IsCSV, f::AbstractString, d::T; kwargs...) where {T<:Table}
+    write(::IsCSV, f::AbstractString, d::T; kwargs...) where {T<:FlexTable}
+    write(::IsCSV, f::AbstractString, d::D; kwargs...) where {D<:Dict}
 
 Write the data `d` to the filepath `f` with kwargs.
 
@@ -40,9 +42,13 @@ function write(f::AbstractString, d; kwargs...)
     return fout
 end
 write(v::Val, f::AbstractString, d; kwargs...) = write(FiletypeTrait(v), f, d; kwargs...)
-function write(
-    ::IsCSV, f::AbstractString, d::Union{T,D}; kwargs...
-) where {T<:Table,D<:Dict}
+function write(::IsCSV, f::AbstractString, d::T; kwargs...) where {T<:Table}
+    @mock(CSV.write(f, d; kwargs...))
+end
+function write(::IsCSV, f::AbstractString, d::T; kwargs...) where {T<:FlexTable}
+    @mock(CSV.write(f, d; kwargs...))
+end
+function write(::IsCSV, f::AbstractString, d::D; kwargs...) where {D<:Dict}
     @mock(CSV.write(f, d; kwargs...))
 end
 

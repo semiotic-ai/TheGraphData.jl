@@ -17,6 +17,13 @@
                 @test TheGraphData.write("fpath.txt", d; delimiter=" ") == "success!"
             end
         end
+        @testset "flextable" begin
+            d = FlexTable(; a=[1, 2, 3], b=[3, 2, 1])
+            apply(write_success_patch) do
+                @test TheGraphData.write("fpath.csv", d; delimiter=" ") == "success!"
+                @test TheGraphData.write("fpath.txt", d; delimiter=" ") == "success!"
+            end
+        end
         @testset "dictionary" begin
             d = Dict("a" => 1, "b" => 2)
             apply(write_success_patch) do
