@@ -20,6 +20,11 @@ function query(v::AbstractString, a::Dict, f::AbstractVector{S}) where {S<:Abstr
     return querytypehelper(d)
 end
 
+function query(s::AbstractString)
+    d::Union{Vector,Dict} = @mock(GQLC.execute(client[], s)).data
+    return querytypehelper(d)
+end
+
 """
     querytypehelper(v::Vector{Dict})
     querytypehelper(v::Dict)

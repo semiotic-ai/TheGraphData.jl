@@ -33,6 +33,37 @@
         t = table(CSV.File(IOBuffer("X\nb\nc\na\nc")))
         @test t.X == ["b", "c", "a", "c"]
     end
+    @testset "flextable" begin
+        t = flextable([
+            Dict("ipfsHash" => "Qma", "signalledTokens" => "1"),
+            Dict("ipfsHash" => "Qmb", "signalledTokens" => "2"),
+        ])
+        @test t.ipfsHash == ["Qma", "Qmb"]
+        @test t.signalledTokens == ["1", "2"]
+
+        t = flextable([
+            Dict("id" => "0xa", "delegatedTokens" => "1"),
+            Dict("id" => "0xb", "delegatedTokens" => "2"),
+        ])
+        @test t.id == ["0xa", "0xb"]
+        @test t.delegatedTokens == ["1", "2"]
+
+        t = flextable([
+            Dict(
+                "indexer" => Dict("id" => "0xa"),
+                "subgraphDeployment" => Dict("ipfsHash" => "Qma"),
+            ),
+            Dict(
+                "indexer" => Dict("id" => "0xb"),
+                "subgraphDeployment" => Dict("ipfsHash" => "Qmb"),
+            ),
+        ])
+        @test t.indexer == [Dict("id" => "0xa"), Dict("id" => "0xb")]
+        @test t.subgraphDeployment == [Dict("ipfsHash" => "Qma"), Dict("ipfsHash" => "Qmb")]
+
+        t = flextable(CSV.File(IOBuffer("X\nb\nc\na\nc")))
+        @test t.X == ["b", "c", "a", "c"]
+    end
     @testset "flatten" begin
         d = Dict("a" => 1, "b" => 2, "c" => 3)
         v = flatten(d)

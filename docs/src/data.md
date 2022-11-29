@@ -52,6 +52,9 @@ To this end, we provide helper functions to put the data into nicer formats.
 
 In Julia, the [Tables.jl](https://github.com/JuliaData/Tables.jl) interface is quite powerful.
 Hence, you may find it useful to format your data as a [TypedTable](https://typedtables.juliadata.org/stable/).
+Note that these tables are immutable.
+They're more efficient if you're not going to be copying your data around for mutation since the compiler can infer column names and types.
+However, if you plan on mutating your table, use FlexTable instead.
 Once your data is a TypedTable, you can use packages like [SplitApplyCombine.jl](https://github.com/JuliaData/SplitApplyCombine.jl) to manipulate your data.
 A typical workflow using the default client from beginning to TypedTable might look like
 
@@ -68,4 +71,12 @@ Table with 1 column and 1 row:
 
 ```@docs
 TheGraphData.table
+```
+
+### FlexTable
+
+This is similar to TypedTable above, except it supports mutation.
+
+```@docs
+TheGraphData.flextable
 ```

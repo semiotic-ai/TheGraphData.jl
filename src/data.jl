@@ -1,7 +1,17 @@
 # Copyright 2022-, Semiotic AI, Inc.
 # SPDX-License-Identifier: Apache-2.0
 
-export table, flatten, setdefault!, symbolkeys, dicttont
+export table, flextable, flatten, setdefault!, symbolkeys, dicttont
+
+function keyvalhelper(d::AbstractVector{D}) where {D<:Dict}
+    # Benchmarking shows that using dataframe with t = reduce(vcat, DataFrame.(d))
+    # is about twice as slow
+    # TODO: still slow
+    ks = keys(d[1])
+    vs = collect.(values.(d))
+    @cast ws[i][j] := vs[j][i]
+    return ks, ws
+end
 
 """
     table(d::AbstractVector{D}) where {D<:Dict}
@@ -11,19 +21,27 @@ export table, flatten, setdefault!, symbolkeys, dicttont
 Convert the queried data `d` to a TypedTable.
 """
 function table(d::AbstractVector{D}) where {D<:Dict}
-    # Benchmarking shows that using dataframe with t = reduce(vcat, DataFrame.(d))
-    # is about twice as slow
-    # TODO: still slow
-    ks = keys(d[1])
-    vs = collect.(values.(d))
-    @cast ws[i][j] := vs[j][i]
+    ks, ws = keyvalhelper(d)
     t = Table(; (Symbol.(ks) .=> ws)...)
     return t
 end
-function table(d::CSV.File)
-    return Table(d)
-end
+table(d::CSV.File) = Table(d)
 table(d::NamedTuple) = Table(d)
+
+"""
+    flextable(d::AbstractVector{D}) where {D<:Dict}
+    flextable(d::CSV.File)
+    flextable(d::NamedTuple)
+
+Convert the queried data `d` to a FlexTable.
+"""
+function flextable(d::AbstractVector{D}) where {D<:Dict}
+    ks, ws = keyvalhelper(d)
+    t = Table(; (Symbol.(ks) .=> ws)...)
+    return t
+end
+flextable(d::CSV.File) = FlexTable(d)
+flextable(d::NamedTuple) = FlexTable(d)
 
 """
     flatten(d::Dict)
