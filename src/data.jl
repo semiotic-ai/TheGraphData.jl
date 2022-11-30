@@ -37,7 +37,7 @@ Convert the queried data `d` to a FlexTable.
 """
 function flextable(d::AbstractVector{D}) where {D<:Dict}
     ks, ws = keyvalhelper(d)
-    t = Table(; (Symbol.(ks) .=> ws)...)
+    t = FlexTable(; (Symbol.(ks) .=> ws)...)
     return t
 end
 flextable(d::CSV.File) = FlexTable(d)
