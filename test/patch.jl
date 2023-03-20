@@ -33,13 +33,14 @@ end
 
 mutate_success_patch = @patch function GQLC.mutate(c::GQLC.Client, v, a; kwargs...)
     println("mutate stub ==> simulating queueActions")
-    return Data(Dict("queueActions" => a["actions"]))
+    return Data(a)
 end
 
 write_success_patch = @patch function CSV.write(f, t; kwargs...)
     println("write stub => simulating success")
     return "success!"
 end
+
 read_csv_success_patch = @patch function CSV.File(f; kwargs...)
     println("read stub => simulating success")
     return CSV.File(IOBuffer("X\nb\nc\na\nc"))

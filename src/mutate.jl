@@ -9,9 +9,9 @@ export mutate
 Send a mutation to the client for value `v` with arguments `a`.
 
 By default, the client is the gateway.
-This function returns a vector of dictionaries.
+This function returns a GQL response.
 """
 function mutate(v::AbstractString, a::Dict)
-    d::Union{Vector,Dict} = @mock(GQLC.mutate(client[], v, a)).data[v]
-    return querytypehelper(d)
+    d = @mock(GQLC.mutate(client[], v, a))
+    return d
 end

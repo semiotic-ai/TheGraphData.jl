@@ -6,7 +6,7 @@
         v = "queueActions"
         a = Dict("actions" => Dict("a" => 1, "b" => 2))
         apply(mutate_success_patch) do
-            @test mutate(v, a) == [Dict("a" => 1, "b" => 2)]
+            @test mutate(v, a).data == a
         end
     end
 end
