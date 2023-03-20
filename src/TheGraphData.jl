@@ -12,6 +12,7 @@ import GraphQLClient as GQLC
 
 include("client.jl")
 include("query.jl")
+include("mutate.jl")
 include("data.jl")
 include("io.jl")
 

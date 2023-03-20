@@ -30,6 +30,12 @@ query_success_patch = @patch function GQLC.query(
 
     return Data(Dict("allocations" => Dict[]))
 end
+
+mutate_success_patch = @patch function GQLC.mutate(c::GQLC.Client, v, a; kwargs...)
+    println("mutate stub ==> simulating queueActions")
+    return Data(Dict("queueActions" => a["actions"]))
+end
+
 write_success_patch = @patch function CSV.write(f, t; kwargs...)
     println("write stub => simulating success")
     return "success!"
