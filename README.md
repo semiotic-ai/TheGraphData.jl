@@ -7,12 +7,8 @@
 
 Tools for querying and working with data from The Graph Protocol.
 
-
-This package is hosted on [SemioticJLRegistry](https://github.com/semiotic-ai/SemioticJLRegistry).
-To add this package, first add the registry to your Julia installation.
-Then, install this package by running `] add TheGraphData` from the Julia REPL.
+To add the package, add the repo directly
 
 ``` julia
-julia> ]registry add https://github.com/semiotic-ai/SemioticJLRegistry
-julia> ]add TheGraphData
+julia> add https://github.com/semiotic-ai/TheGraphData.jl.git
 ```
