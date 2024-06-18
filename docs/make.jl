@@ -6,7 +6,6 @@ DocMeta.setdocmeta!(TheGraphData, :DocTestSetup, :(using TheGraphData); recursiv
 makedocs(;
     modules=[TheGraphData],
     authors="Semiotic Labs, Inc.",
-    repo="https://github.com/semiotic-ai/TheGraphData.jl/blob/{commit}{path}#{line}",
     sitename="TheGraphData.jl",
     format=Documenter.HTML(;
         prettyurls=get(ENV, "CI", "false") == "true",
@@ -19,6 +18,7 @@ makedocs(;
         "Querying Clients" => "querying.md",
         "IO" => "io.md",
         "Handling Data" => "data.md",
+        "API Reference" => "api.md",
     ],
 )
 
